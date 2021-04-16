@@ -1,10 +1,11 @@
 package blue.starry.steward
 
-import kotlinx.coroutines.coroutineScope
 import mu.KotlinLogging
 
-val logger = KotlinLogging.createFeedchimeLogger("steward")
+internal val logger = KotlinLogging.createFeedchimeLogger("steward")
 
-suspend fun main(): Unit = coroutineScope {
+fun main() {
     logger.info { "Application started!" }
+
+    StewardJDA.awaitReady()
 }

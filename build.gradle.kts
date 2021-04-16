@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.4.30"
+    kotlin("plugin.serialization") version "1.4.30"
     id("com.github.johnrengelman.shadow") version "6.1.0"
 
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
@@ -8,8 +9,10 @@ plugins {
 }
 
 object Versions {
-    const val JDA = "4.2.0_247"
+    const val JDA = "4.2.0_252"
     const val KotlinxCoroutinesCore = "1.4.3"
+    const val KotlinxSerializationJson = "1.1.0"
+    const val kaml = "0.29.0"
 
     const val KotlinLogging = "2.0.4"
     const val Logback = "1.2.3"
@@ -21,6 +24,8 @@ object Versions {
 object Libraries {
     const val JDA = "net.dv8tion:JDA:${Versions.JDA}"
     const val KotlinxCoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KotlinxCoroutinesCore}"
+    const val KotlinxSerializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.KotlinxSerializationJson}"
+    const val kaml = "com.charleskorn.kaml:kaml:${Versions.kaml}"
 
     const val KotlinLogging = "io.github.microutils:kotlin-logging:${Versions.KotlinLogging}"
     const val LogbackCore = "ch.qos.logback:logback-core:${Versions.Logback}"
@@ -36,13 +41,16 @@ object Libraries {
 repositories {
     mavenCentral()
 
-    // TODO: It should be removed by May 1, 2021.
-    jcenter()
+    maven(url = "https://m2.dv8tion.net/releases")
 }
 
 dependencies {
-    implementation(Libraries.JDA)
+    implementation(Libraries.JDA) {
+        exclude(module = "opus-java")
+    }
     implementation(Libraries.KotlinxCoroutinesCore)
+    implementation(Libraries.KotlinxSerializationJson)
+    implementation(Libraries.kaml)
 
     implementation(Libraries.KotlinLogging)
     implementation(Libraries.LogbackCore)
